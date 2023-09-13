@@ -6,7 +6,14 @@ require("dotenv").config();
 const pool = require("./db");
 
 // middleware
-app.use(cors());
+const corsOptions = {
+  origin: 'https://zen-todo-client.vercel.app',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+};
+
+app.use(cors(corsOptions));
+
+
 app.use(express.json()); //req. body
 
 // ROUTES
@@ -23,8 +30,10 @@ app.post("/todos", async (req, res) => {
     res.json(newTodo.rows[0]);
   } catch (err) {
     console.error(err.message);
+    res.status(500).json({ error: 'Server error' });
   }
 });
+
 
 // get all todos
 app.get("/todos", async (req, res) => {
@@ -47,6 +56,7 @@ app.get("/todos/:id", async (req, res) => {
     res.json(todo.rows[0]);
   } catch (err) {
     console.error(err.message);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
@@ -64,6 +74,7 @@ app.put("/todos/:id", async (req, res) => {
     res.json("Todo was updated!");
   } catch (err) {
     console.error(err.message);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
@@ -78,6 +89,7 @@ app.delete("/todos/:id", async (req, res) => {
     res.json("Todo was deleted!");
   } catch (err) {
     console.log(err.message);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 

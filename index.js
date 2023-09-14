@@ -13,7 +13,7 @@ app.use(cors({origin: '*'}));
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'https://zen-todo-client.vercel.app/');
+  res.setHeader('Access-Control-Allow-Origin', 'https://zen-todo-client.vercel.app');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');

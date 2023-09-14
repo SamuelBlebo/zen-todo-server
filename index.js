@@ -1,14 +1,22 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
+const app = express();
+
 
 require("dotenv").config();
 const pool = require("./db");
 
 // middleware
+const allowedOrigins = ['https://zen-todo-client.vercel.app'];
+
 const corsOptions = {
-  origin: 'https://zen-todo-client.vercel.app',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
 };
 
 app.use(cors(corsOptions));
@@ -93,7 +101,7 @@ app.delete("/todos/:id", async (req, res) => {
   }
 });
 
-//Server
-app.listen(process.env.PORT, () => {
-  console.log("server has started on port 5000");
-});
+// //Server
+// app.listen(process.env.PORT, () => {
+//   console.log("server has started on port 5000");
+// });

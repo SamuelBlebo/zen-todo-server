@@ -7,6 +7,7 @@ require("dotenv").config();
 const pool = require("./db");
 
 // middleware
+app.use(express.json()); //req. body
 const allowedOrigins = ['https://zen-todo-client.vercel.app'];
 
 const corsOptions = {
@@ -22,7 +23,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
-app.use(express.json()); //req. body
+
 
 // ROUTES
 

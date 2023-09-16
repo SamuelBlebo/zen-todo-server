@@ -2,34 +2,19 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-
 require("dotenv").config();
 const pool = require("./db");
 
 // middleware
 app.use(express.json()); //req. body
 
-app.use(cors({origin: '*'}));
-app.use(function (req, res, next) {
-
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'https://zen-todo-client.vercel.app');
-
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
-
-  // Pass to next layer of middleware
-  next();
-});
-
-
+app.use(
+  cors({
+    origin: ["https://zen-todo-client.vercel.app"],
+    methods: ["POST", "GET", "PUT", "DELETE"],
+    credential: "true",
+  })
+);
 
 // ROUTES
 
@@ -45,10 +30,9 @@ app.post("/todos", async (req, res) => {
     res.json(newTodo.rows[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: "Server error" });
   }
 });
-
 
 // get all todos
 app.get("/todos", async (req, res) => {
@@ -71,7 +55,7 @@ app.get("/todos/:id", async (req, res) => {
     res.json(todo.rows[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: "Server error" });
   }
 });
 
@@ -89,7 +73,7 @@ app.put("/todos/:id", async (req, res) => {
     res.json("Todo was updated!");
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: "Server error" });
   }
 });
 
@@ -104,7 +88,7 @@ app.delete("/todos/:id", async (req, res) => {
     res.json("Todo was deleted!");
   } catch (err) {
     console.log(err.message);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: "Server error" });
   }
 });
 

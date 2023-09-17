@@ -9,7 +9,7 @@ const pool = require("./db");
 app.use(express.json()); // req. body
 
 const corsOptions = {
-  origin: "https://zen-todo-client-mavvirsvz-samuelblebo.vercel.app",
+  origin: "https://zen-todo-client.vercel.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, // You might need this if you're using cookies or sessions
 };

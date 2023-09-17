@@ -6,13 +6,13 @@ require("dotenv").config();
 const pool = require("./db");
 
 // middleware
-app.use(express.json()); //req. body
+app.use(express.json()); // req. body
 
 app.use(
   cors({
     origin: ["https://zen-todo-client.vercel.app"],
     methods: ["POST", "GET", "PUT", "DELETE"],
-    credential: "true",
+    credentials: true, // Fix the typo here
   })
 );
 
@@ -41,6 +41,7 @@ app.get("/todos", async (req, res) => {
     res.json(allTodos.rows);
   } catch (err) {
     console.error(err.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
@@ -60,7 +61,6 @@ app.get("/todos/:id", async (req, res) => {
 });
 
 // update a todo
-
 app.put("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -77,8 +77,7 @@ app.put("/todos/:id", async (req, res) => {
   }
 });
 
-//delete a todo
-
+// delete a todo
 app.delete("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -87,12 +86,13 @@ app.delete("/todos/:id", async (req, res) => {
     ]);
     res.json("Todo was deleted!");
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// //Server
-// app.listen(process.env.PORT, () => {
-//   console.log("server has started on port 5000");
-// });
+// Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

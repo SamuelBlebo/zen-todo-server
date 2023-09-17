@@ -8,13 +8,14 @@ const pool = require("./db");
 // middleware
 app.use(express.json()); // req. body
 
-app.use(
-  cors({
-    origin: ["https://zen-todo-client.vercel.app"],
-    methods: ["POST", "GET", "PUT", "DELETE"],
-    credentials: true, // Fix the typo here
-  })
-);
+const corsOptions = {
+  origin: "https://zen-todo-client-mavvirsvz-samuelblebo.vercel.app",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true, // You might need this if you're using cookies or sessions
+};
+
+app.use(cors(corsOptions));
+
 
 // ROUTES
 

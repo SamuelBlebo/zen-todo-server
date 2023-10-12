@@ -11,11 +11,10 @@ app.use(express.json()); // req. body
 const corsOptions = {
   origin: "https://zen-todo-client.vercel.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true, // You might need this if you're using cookies or sessions
+  credentials: true, //
 };
 
 app.use(cors(corsOptions));
-
 
 // ROUTES
 
